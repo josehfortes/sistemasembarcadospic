@@ -1,5 +1,44 @@
 /*
-
+               UNIFESP - Universidade Federal de São Paulo
+                       ICT - São José Dos Campos
+********************************************************************************
+PROGRAMA: Criar um sistema de monitoramento de temperatura com alarme e acio-
+namento de dispositivos para controlar a temperatura.
+********************************************************************************
+O que foi utilizado:
+- Sensor de temperatura LM35 e resistor de aquecimento 
+( o resistor é apenas para testes de provável temperatura de alarme ).
+- Temporizador setado em 1s para ler temperatura a cada 1s.
+- Dois displays de 7 segmentos DIS2 e DIS3 para mostrar temperatura atual.
+- LCD para Menu com as funções de setar temperatura para alarme e liga/desliga.
+- Memória interna EEPROM para armazenar temperatura de alarme e status.
+- PWM acionando cooler quando alarme é acionado.
+- Potenciômetro para setar a velocidade do cooler.
+- Buzzer para alerta sonoro do alarme.
+- Relé liga/desliga de acordo com o alarme para simulação de outros dispositivos
+********************************************************************************
+         DISCIPLINA: Sistemas Embarcados
+            AUTOR: José Henrique Fortes Leite
+            TURMA: Integral
+            ANO: 2017
+            DOCENTE: Prof. Galvão
+            PLACA DE DESENVOLVIMENTO: KIT PICgenios - PIC18F
+************************ Configurações do KIT Picgenios ************************
+ CRISTAL: 8Mhz.
+ CHAVES DE FUNÇÃO:
+  --------------------- ----------------------
+ |GLCD\LCD ( 1) = ON   |DIS1     ( 1) = OFF   |
+ |RX       ( 2) = OFF  |DIS2     ( 2) = ON    |
+ |TX       ( 3) = OFF  |DIS3     ( 3) = ON    |
+ |REL1     ( 4) = OFF  |DIS4     ( 4) = OFF   |
+ |REL2     ( 5) = ON   |INFR     ( 5) = OFF   |
+ |SCK      ( 6) = OFF  |RESIS    ( 6) = ON    |
+ |SDA      ( 7) = OFF  |TEMP     ( 7) = ON    |
+ |RTC      ( 8) = OFF  |VENT     ( 8) = ON    |
+ |LED1     ( 9) = OFF  |AN0      ( 9) = ON    |
+ |LED2     (10) = OFF  |AN1      (10) = OFF   |
+  --------------------- ----------------------
+********************************************************************************
 */
 // CONFIGURAÇÃO DOS PINOS DO LCD.
 sbit LCD_RS at RE2_bit;

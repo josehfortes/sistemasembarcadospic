@@ -1,5 +1,5 @@
 #line 1 "C:/Users/aluno/Desktop/COISAS PICgenios/JH/projfinal.c"
-
+#line 44 "C:/Users/aluno/Desktop/COISAS PICgenios/JH/projfinal.c"
 sbit LCD_RS at RE2_bit;
 sbit LCD_EN at RE1_bit;
 sbit LCD_D7 at RD7_bit;
