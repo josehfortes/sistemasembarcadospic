@@ -1,4 +1,7 @@
-// CONFIGURAÃ‡ÃƒO DOS PINOS DO LCD.
+/*
+
+*/
+// CONFIGURAÇÃO DOS PINOS DO LCD.
 sbit LCD_RS at RE2_bit;
 sbit LCD_EN at RE1_bit;
 sbit LCD_D7 at RD7_bit;
@@ -6,7 +9,7 @@ sbit LCD_D6 at RD6_bit;
 sbit LCD_D5 at RD5_bit;
 sbit LCD_D4 at RD4_bit;
 
-// DIREÃ‡ÃƒO DOS PINOS.
+// DIREÇÃO DOS PINOS.
 sbit LCD_RS_Direction at TRISE2_bit;
 sbit LCD_EN_Direction at TRISE1_bit;
 sbit LCD_D7_Direction at TRISD7_bit;
@@ -25,7 +28,7 @@ int pos2 = 12;
 float temperaturaLida = 0;
 float vel;
 unsigned char ucTexto[10];   // Matriz para armazenamento de texto.
-unsigned int iLeituraAD = 0; // Define variÃ¡vel para armazenamento da leitura AD.
+unsigned int iLeituraAD = 0; // Define variável para armazenamento da leitura AD.
 
 
 void GRAUS();
@@ -47,7 +50,7 @@ void main() {
    TRISC.RC1 = 0;                    // Define PORTC.RC1 como saida.
    TRISE = 0;                        // Define PORTE como saida.
 
-   ADCON0 = 0b00000001;              // Configura conversor A/D Canal 0, conversÃ£o desligada, A/D ligado.
+   ADCON0 = 0b00000001;              // Configura conversor A/D Canal 0, conversão desligada, A/D ligado.
    ADCON1 = 0b00001100;              // Configura todos canais como Digital menos AN0,AN1 E AN2 e REF Interna.
    ADCON2 = 0b10111110;              // Configura conversor A/D para resultado justificado a direita, clock de 20 TAD, clock de Fosc/64.
 
@@ -56,14 +59,14 @@ void main() {
    TRISB.RB0=0;        // Define o pino RB0 do PORTB como saida(Coluna1).
    TRISB.RB1=0;        // Define o pino RB1 do PORTB como saida(Coluna2).
    TRISB.RB2=0;        // Define o pino RB2 do PORTB como saida(Coluna3).
-   TRISA.RA3=0;        // Define O Pino RA3 Do PORTA Como Saida(SeleÃ§Ã£o Display 2).
-   TRISA.RA4=0;        // Define O Pino RA4 Do PORTA Como Saida(SeleÃ§Ã£o Display 3).
+   TRISA.RA3=0;        // Define O Pino RA3 Do PORTA Como Saida(Seleção Display 2).
+   TRISA.RA4=0;        // Define O Pino RA4 Do PORTA Como Saida(Seleção Display 3).
 
    Menu();
    PORTC.RC5 = 1; //liga o aquecimento
 
-   // ConfiguraÃ§Ã£o do Timer0.
-                            // Cristal de 8Mhz, ciclo de mÃ¡quina: 8MHz / 4 = 2Mhz --> 1/2Mhz = 0,5us.
+   // Configuração do Timer0.
+                            // Cristal de 8Mhz, ciclo de máquina: 8MHz / 4 = 2Mhz --> 1/2Mhz = 0,5us.
    T0CON.T0CS = 0;          // Timer0 operando como temporizador.
    T0CON.PSA = 0;           // Prescaler ativado.
    T0CON.T0PS2 = 1;         // Define prescaler 1:256.
@@ -71,10 +74,10 @@ void main() {
    T0CON.T0PS0 = 1;         // Define prescaler 1:256.
    T0CON.T08BIT = 0;        // Define contagem no modo 16 bits.
    // Valor para 1 segundo.
-   TMR0H = 0xE1;            // Carrega o valor alto do nÃºmero 57723.
+   TMR0H = 0xE1;            // Carrega o valor alto do número 57723.
    TMR0L = 0x7B;            // Carrega o valor baixo do numero 57723.
 
-   INTCON.TMR0IF = 0;       // Apaga flag de estouro do timer0, pois Ã© fundamental para a sinalizaÃ§Ã£o do estouro.
+   INTCON.TMR0IF = 0;       // Apaga flag de estouro do timer0, pois é fundamental para a sinalização do estouro.
    T0CON.TMR0ON = 1;        // Liga timer0.
 
 
@@ -82,15 +85,15 @@ void main() {
    //pwm
    TRISC.RC0 = 1;                    // Define PORTC.RC0 como entrada.
    TRISC.RC2 = 0;                    // Define PORTC.RC2 como saida.
-   
+
    //rele
    TRISE.RE0 = 0;      // Define o pino RE0 do TRISE como saida.
    //EEPROM_write(0,23);
    //EEPROM_write(1,1);
-   
+
    temperaturaAlarme = EEPROM_read(0);
    statusAlarme = EEPROM_read(1);
-   
+
    while(1){
        temperaturaAlarme = EEPROM_read(0);
        statusAlarme = EEPROM_read(1);
@@ -107,12 +110,12 @@ void main() {
        // Incrementa Contador.
       if(INTCON.TMR0IF==1){   // Incrementa somente quando existir o overflow do timer 0.
          // Recarrega o timer0.
-         TMR0H = 0xE1 ;           // Carrega o valor alto do nÃºmero 57723.
+         TMR0H = 0xE1 ;           // Carrega o valor alto do número 57723.
          TMR0L = 0x7B;            // Carrega o valor baixo do numero 57723.
 
          INTCON.TMR0IF = 0;       // Limpa o flag de estouro do timer0 para uma nova contagem de tempo.
 
-         iLeituraAD= ADC_Read(2);          // LÃª Canal AD 2
+         iLeituraAD= ADC_Read(2);          // Lê Canal AD 2
          iLeituraAD/=2;                    // Converte valor do sensor LM35
          temperaturaLida = iLeituraAD;
          pos1 = iLeituraAD%10;
@@ -121,21 +124,21 @@ void main() {
       }
 
       imprimeDisplay(pos2,pos1);
-      
-      
+
+
       if ((temperaturaLida >= temperaturaAlarme) && (statusAlarme == 1)){
          ligaAlarme();
       }else{
          desligaAlarme();
       }
 
-   
+
    }
 }
 
 void ligaAlarme(){
    PORTC.RC1 = 0; //liga o buzzer
-   PWM1_Init(5000);                  // Inicializa mÃ³dulo PWM com 5Khz
+   PWM1_Init(5000);                  // Inicializa módulo PWM com 5Khz
    //vel = (float) temperaturaLida;
    vel = (ADC_read(0));
    PWM1_Set_Duty(vel);               // Seta o Duty-cycle do PWM
